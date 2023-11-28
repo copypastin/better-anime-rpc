@@ -1,7 +1,7 @@
 const {app, BrowserWindow} = require('electron')
 const { getInfoFromName } = require("./helpers/mal-info")
 const {setRPC, initiateRPC } = require("./rpc")
-const URL = "https://anix.to/home"
+const URL = "https://www1.anix.to/home"
 let client;
 let RPCDetails;
 
@@ -48,7 +48,7 @@ let lastTitle;
 
 
             const currentURL = win.webContents.getURL();
-            if (currentURL !== "https://anix.to/home" && lastURL !== currentURL) {
+            if (currentURL !== URL && lastURL !== currentURL) {
 
                 let title = currentURL.toString().split("/")[4].split("-").slice(0, -1).join(" ")
                 let ep = currentURL.split("ep-")[1]
@@ -79,8 +79,8 @@ let lastTitle;
 
                 win.setTitle(`Anime Tracker | Watching ${data.title}`)
 
-            } else if (currentURL === "https://anix.to/home" && lastURL !== currentURL) {
-                lastURL = "https://anix.to/home"
+            } else if (currentURL === URL && lastURL !== currentURL) {
+                lastURL = URL
                 lastTitle = "Main Menu";
                 lastTitle = undefined;
                 lastTimeStamp = null;
@@ -93,7 +93,7 @@ let lastTitle;
                     largeImageText: 'aaron was here',
                     state: 'Browsing Anime',
                     instance: true,
-                    buttons: [{label: `Github Repo`, url: `https://github.com/copypastin/barpc`}]
+                    buttons: [{label: `Github Repo`, url: `https://github.com/copypastin/better-anime-rpc`}]
                 }
             }
 
