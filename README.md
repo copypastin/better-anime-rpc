@@ -6,11 +6,6 @@ Simple and easy to use program that allows you to show off your anime watching h
 
 Built using Electron.
 
-### Prequisites
-
-- [Node.js](https://nodejs.org/en/download/)
-
-
 ![image](https://github.com/copypastin/barpc-dev/assets/102574887/880b3823-b328-4d20-8466-4e5cfbb19944)
 
 ![image](https://github.com/copypastin/barpc-dev/assets/102574887/b4b48109-3e59-45c7-bc3c-464dd7d3ff14)
