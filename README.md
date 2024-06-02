@@ -18,11 +18,11 @@ Install from latest release
 
 Unzip/Open folder and run barcp.exe
 
-(Optional: Right-click on BARCP.exe and create shortcut. Then drag and drop the shortcut to desktop!)
+(Recommended: Right-click on BARCP.exe and create shortcut. Then drag and drop the shortcut to desktop!)
 
 ![shortcut](https://github.com/copypastin/barpc-dev/assets/102574887/9f7c097d-c768-4b03-b96a-ddacab9be707)
 
-(if you would rather download the repo and set up the electron app for youself, run `npx electron-packager .`)
+(if you would rather download the repo and set up the electron app for youself, run "`npx electron-packager .`")
 
 
 
