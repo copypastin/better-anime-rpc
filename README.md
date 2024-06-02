@@ -6,21 +6,22 @@ Simple and easy to use program that allows you to show off your anime watching h
 
 Built using Electron.
 
-![image](https://github.com/copypastin/barpc-dev/assets/102574887/880b3823-b328-4d20-8466-4e5cfbb19944)
+![image](https://github.com/copypastin/better-anime-rpc/assets/102574887/2c00af3b-8361-4291-820c-2c0cc40720d5)
 
-![image](https://github.com/copypastin/barpc-dev/assets/102574887/b4b48109-3e59-45c7-bc3c-464dd7d3ff14)
+
+![image](https://github.com/copypastin/better-anime-rpc/assets/102574887/a805ebdc-b785-4888-af3f-4c29fd550ce1)
 
 
 ### Instructions
 Install from latest release
 
-![install](https://github.com/copypastin/barpc-dev/assets/102574887/962a2615-839f-4c92-97a2-37d5fec5657b)
+![image](https://github.com/copypastin/better-anime-rpc/assets/102574887/262d8f21-d385-422a-9315-26aea60ffaae)
 
 Unzip/Open folder and run barcp.exe
 
 (Recommended: Right-click on BARCP.exe and create shortcut. Then drag and drop the shortcut to desktop!)
 
-![shortcut](https://github.com/copypastin/barpc-dev/assets/102574887/9f7c097d-c768-4b03-b96a-ddacab9be707)
+![image](https://github.com/copypastin/better-anime-rpc/assets/102574887/832c3c89-a317-4286-82de-224a9e22c0bd)
 
 (if you would rather download the repo and set up the electron app for youself, run "`npx electron-packager .`")
 
@@ -30,4 +31,4 @@ Unzip/Open folder and run barcp.exe
 
 If the video fails to load, has constant buffering, or very low quality you just need to change servers
 
-![image](https://github.com/copypastin/barpc-dev/assets/102574887/5045a0f8-e04c-4e7c-a086-7e2f55b1b44d)
+![image](https://github.com/copypastin/better-anime-rpc/assets/102574887/e0195869-870f-43da-9b25-6112a973ee9b)
