@@ -1,8 +1,8 @@
 const RPC = require('discord-rpc')
 const client = new RPC.Client({ transport: 'ipc' })
 
-const setRPC = async (c, details) => {
-    await c.setActivity(details)
+const setRPC = async (client, details) => {
+    await client.setActivity(details)
 }
 
 const initiateRPC = async () => {

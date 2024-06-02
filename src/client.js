@@ -45,20 +45,20 @@ app.whenReady().then(() => {
         // Prevents RPC from constantly trying to update
         if (lastURL == currentURL) return;
 
-
-        // Check if user is on a different page that is also not the URl
+        // Check if user changed pages
         if (currentURL !== URL) {
             let data;
 
             try {
                 let obfsuTitle = currentURL.toString().split("/")[4].split("-").slice(0, -1).join(" ")
-                data = await getInfoFromName(obfsuTitle.replace(/[0-9]/g, ''));
+                data = await getInfoFromName(obfsuTitle.replace(/[0-9]/g, ''))
             } catch (err) {
                 window.loadURL(URL)
                 new Notification({
                     title: "BARPC | Something went wrong!",
                     body: "Page was reloaded for your convience."
                 }).show()
+                console.log(`Failed to load ${currentURL}, going to homepage.`)
             }
 
             lastURL = currentURL;
@@ -78,7 +78,7 @@ app.whenReady().then(() => {
 
             window.setTitle(`Anime Tracker | Watching ${data.title}`)
 
-            // Checking if the user is on the homepage
+        // Checking if the user is on the homepage
         } else if (currentURL === URL) {
             lastURL = URL
             lastTitle = "Main Menu";
@@ -97,8 +97,6 @@ app.whenReady().then(() => {
         }
 
         await setRPC(client, RPCDetails)
-
-
     }, 5E3); // 5 seconds
 })
 
