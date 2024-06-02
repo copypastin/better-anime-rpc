@@ -1,7 +1,8 @@
-const { app, BrowserWindow, Notification } = require('electron')
+const { app, BrowserWindow, Notification, session } = require('electron')
 const { getInfoFromName } = require("./helpers/mal-info")
 const { setRPC, initiateRPC } = require("./helpers/rpc")
-const URL = "https://anix.to/"
+const URL = "https://anix.to/home"
+const URL2 = "https://anix.to/"
 
 let client;
 let RPCDetails;
@@ -26,6 +27,10 @@ app.whenReady().then(() => {
         nativeWindowOpen: true
     });
 
+    session.defaultSession.clearStorageData([], function (data) {
+        console.log(data);
+    })
+
     window.loadURL(URL)
         .then(async () => {
             window.setTitle("Anime Tracker")
@@ -45,8 +50,42 @@ app.whenReady().then(() => {
         // Prevents RPC from constantly trying to update
         if (lastURL == currentURL) return;
 
-        // Check if user changed pages
-        if (currentURL !== URL) {
+        // Check if on main menu
+        if (currentURL === URL || currentURL === URL2) {
+            lastURL = URL
+            lastTitle = "Main Menu";
+            lastTitle = undefined;
+
+            RPCDetails = {
+                details: 'Main Menu',
+                largeImageKey: 'https://cdn.frankerfacez.com/emoticon/517943/4',
+                largeImageText: 'aaron was here',
+                state: 'Scheming!',
+                instance: true,
+                buttons: [{ label: `Github Repo`, url: `https://github.com/copypastin/better-anime-rpc` }]
+            }
+
+            window.setTitle("Anime Tracker | Main Menu")
+        }
+
+        // Checks if on search page
+        else if(currentURL.includes("filter?keyword")) {
+            lastURL = currentURL;
+
+            RPCDetails = {
+                details: `Browsing...`,
+                largeImageKey: 'https://cdn.frankerfacez.com/emoticon/517943/4',
+                largeImageText: "aaron was here",
+                state: `Looking for something cool!`,
+                instance: true,
+                buttons: [
+                    { label: `Github Repo`, url: `https://github.com/copypastin/better-anime-rpc`, }
+                ],
+            }
+        }
+
+        // Check if watching an anime
+        else if (currentURL !== URL) {
             let data;
 
             try {
@@ -70,31 +109,15 @@ app.whenReady().then(() => {
                 largeImageText: data.genres.join(", "),
                 state: `Episode ${currentURL.split("ep-")[1]}` ?? `Episode ?`,
                 instance: true,
-                buttons: [{
-                    label: `${data.popularity} in Popularity`, url: `${data.url}`
-                }, { label: `${data.ranked} in Ratings`, url: `${data.url}/stats` }],
+                buttons: [
+                    { label: `Github Repo`, url: `https://github.com/copypastin/better-anime-rpc` },
+                    {label: `${data.popularity} in Popularity`, url: `${data.url}`}, 
+                ],
                 startTimestamp: new Date().getTime()
             }
 
             window.setTitle(`Anime Tracker | Watching ${data.title}`)
-
-        // Checking if the user is on the homepage
-        } else if (currentURL === URL) {
-            lastURL = URL
-            lastTitle = "Main Menu";
-            lastTitle = undefined;
-
-            RPCDetails = {
-                details: 'Main Menu',
-                largeImageKey: 'https://cdn.frankerfacez.com/emoticon/517943/4',
-                largeImageText: 'aaron was here',
-                state: 'Browsing Anime',
-                instance: true,
-                buttons: [{ label: `Github Repo`, url: `https://github.com/copypastin/better-anime-rpc` }]
-            }
-
-            window.setTitle("Anime Tracker | Main Menu")
-        }
+        } 
 
         await setRPC(client, RPCDetails)
     }, 5E3); // 5 seconds
