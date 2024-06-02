@@ -22,6 +22,8 @@ Unzip/Open folder and run barcp.exe
 
 ![shortcut](https://github.com/copypastin/barpc-dev/assets/102574887/9f7c097d-c768-4b03-b96a-ddacab9be707)
 
+(if you would rather download the repo and set up the electron app for youself, run `npx electron-packager .`)
+
 
 
 ### Other Info
@@ -29,19 +31,3 @@ Unzip/Open folder and run barcp.exe
 If the video fails to load, has constant buffering, or very low quality you just need to change servers
 
 ![image](https://github.com/copypastin/barpc-dev/assets/102574887/5045a0f8-e04c-4e7c-a086-7e2f55b1b44d)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
