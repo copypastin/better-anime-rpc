@@ -1,13 +1,16 @@
-const { app, BrowserWindow, Notification, session } = require('electron')
-const { getInfoFromName } = require("./helpers/mal-info")
-const { setRPC, initiateRPC } = require("./helpers/rpc")
-const URL = "https://anix.to/home"
-const URL2 = "https://anix.to/"
+const { app, BrowserWindow, Notification, session } = require('electron');
+const { getInfoFromName } = require("./helpers/mal-info");
+const { setRPC, initiateRPC } = require("./helpers/rpc");
+const { linkFilter } = require("./helpers/linkFilter");
+const URL = "https://anix.to/home";
+const URL2 = "https://anix.to/";
+
 
 let client;
 let RPCDetails;
 let lastURL;
 let lastTitle;
+
 
 app.whenReady().then(() => {
     let window = new BrowserWindow({
@@ -27,19 +30,15 @@ app.whenReady().then(() => {
         nativeWindowOpen: true
     });
 
-    session.defaultSession.clearStorageData([], function (data) {
-        console.log(data);
-    })
-
     window.loadURL(URL)
         .then(async () => {
-            window.setTitle("Anime Tracker")
-            client = await initiateRPC()
+            window.setTitle("Anime Tracker");
+            client = await initiateRPC();
         })
 
     //POPUP BLOCKER 
     window.webContents.setWindowOpenHandler(() => {
-        console.log('popup denied')
+        console.log('popup denied');
         return { action: "deny" };
     });
 
@@ -50,9 +49,14 @@ app.whenReady().then(() => {
         // Prevents RPC from constantly trying to update
         if (lastURL == currentURL) return;
 
+        // Check for if client has been initiated
+        if (!client) client = await initiateRPC();
+
+
+
         // Check if on main menu
         if (currentURL === URL || currentURL === URL2) {
-            lastURL = URL
+            lastURL = URL;
             lastTitle = "Main Menu";
             lastTitle = undefined;
 
@@ -60,23 +64,21 @@ app.whenReady().then(() => {
                 details: 'Main Menu',
                 largeImageKey: 'https://cdn.frankerfacez.com/emoticon/517943/4',
                 largeImageText: 'aaron was here',
-                state: 'Scheming!',
                 instance: true,
                 buttons: [{ label: `Github Repo`, url: `https://github.com/copypastin/better-anime-rpc` }]
             }
 
-            window.setTitle("Anime Tracker | Main Menu")
+            window.setTitle("Anime Tracker | Main Menu");
         }
 
         // Checks if on search page
-        else if(currentURL.includes("filter?keyword")) {
+        else if(linkFilter(currentURL)) {
             lastURL = currentURL;
 
             RPCDetails = {
                 details: `Browsing...`,
                 largeImageKey: 'https://cdn.frankerfacez.com/emoticon/517943/4',
                 largeImageText: "aaron was here",
-                state: `Looking for something cool!`,
                 instance: true,
                 buttons: [
                     { label: `Github Repo`, url: `https://github.com/copypastin/better-anime-rpc`, }
@@ -92,12 +94,13 @@ app.whenReady().then(() => {
                 let obfsuTitle = currentURL.toString().split("/")[4].split("-").slice(0, -1).join(" ")
                 data = await getInfoFromName(obfsuTitle.replace(/[0-9]/g, ''))
             } catch (err) {
-                window.loadURL(URL)
+                window.loadURL(URL);
+                session.defaultSession.clearStorageData([], {});
                 new Notification({
                     title: "BARPC | Something went wrong!",
                     body: "Page was reloaded for your convience."
-                }).show()
-                console.log(`Failed to load ${currentURL}, going to homepage.`)
+                }).show();
+                console.log(`Failed to load ${currentURL}, going to homepage.`);
             }
 
             lastURL = currentURL;
@@ -116,10 +119,10 @@ app.whenReady().then(() => {
                 startTimestamp: new Date().getTime()
             }
 
-            window.setTitle(`Anime Tracker | Watching ${data.title}`)
+            window.setTitle(`Anime Tracker | Watching ${data.title}`);
         } 
 
-        await setRPC(client, RPCDetails)
+        await setRPC(client, RPCDetails);
     }, 5E3); // 5 seconds
 })
 
